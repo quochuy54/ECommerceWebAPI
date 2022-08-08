@@ -6,8 +6,10 @@ require('dotenv/config');
 
 //Middleware
 app.use(express.json());
+app.use('/public/uploads', express.static(__dirname + "\\public\\uploads"));
+
 // Connect MongoDB
-mongoose.connect('mongodb://localhost:27017/ECommerce', {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
 })
 .then(() => {console.log('Connect DB successfully!')})
