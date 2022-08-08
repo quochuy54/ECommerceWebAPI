@@ -4,6 +4,21 @@ const route = express.Router();
 const Product  = require('../model/product');
 const mongoose = require('mongoose');
 const {isAuthen, isAdmin} = require('../auth/isAuth');
+const multer = require('multer');
+
+// Config Disk in multer
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads')
+    },
+    filename: function (req, file, cb) {
+        const filename = file.fieldname.replace(' ', '-');
+        cb(null, `${filename}-${Date.now()}`)
+    }
+})
+
+const upload = multer({ storage: storage });
+
 
 //Get All Product and Filter by catelogy
 route.get('/', isAuthen, isAdmin, async (req, res) => {
@@ -35,7 +50,7 @@ route.get('/:id', async (req, res) => {
 })
 
 // Post Product
-route.post('/', async (req, res) => {
+route.post('/', upload.single('avatar'), async (req, res) => {
     try{
         let catelogyId = req.body.catelogy;
 
@@ -50,7 +65,7 @@ route.post('/', async (req, res) => {
             name: req.body.name,
             description: req.body.description,
             richDescription: req.body.richDescription,
-            image: req.body.image,
+            image: req.file.fieldname,
             brand: req.body.brand,
             price: req.body.price,
             catelogy: req.body.catelogy,
@@ -60,6 +75,7 @@ route.post('/', async (req, res) => {
             dateCreated: req.body.dateCreated,
 
         });
+        console.log();
         const newProduct = await product.save();
         res.status(200).json(newProduct);
     } catch(e) {
