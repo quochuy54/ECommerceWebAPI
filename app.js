@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const route = require('./route/index');
 require('dotenv/config');
 const cors=require("cors");
-
+console.log(__dirname + "\\public\\uploads")
 //Middleware
 app.use(express.json());
 app.use('/public/uploads', express.static(__dirname + "\\public\\uploads"));
