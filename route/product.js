@@ -77,6 +77,7 @@ route.post('/', isAuthen, isAdmin, upload.single('image'), async (req, res) => {
 
         // file url
         const fileUrl = `${req.protocol}://${req.get('host')}/public/uploads/${req.file.filename}`;
+        console.log(fileUrl)
         const product = new Product({
             name: req.body.name,
             description: req.body.description,
