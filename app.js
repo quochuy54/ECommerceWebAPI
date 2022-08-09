@@ -14,7 +14,7 @@ mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
 })
 .then(() => {console.log('Connect DB successfully!')})
-.catch(() => {console.log('Connect DB failure')});
+.catch((e) => {console.log('Connect DB failure: ', e)});
 
 //Router
 app.use('/api/v1', route);
