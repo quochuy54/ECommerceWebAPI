@@ -8,7 +8,7 @@ const cors=require("cors");
 console.log(path.join(__dirname + "/public/uploads"))
 //Middleware
 app.use(express.json());
-app.use('/public/uploads', express.static(__dirname + "\\public\\uploads"));
+app.use('/public/uploads', express.static(path.join(__dirname + "/public/uploads")));
 //COR
 const corsOptions ={
     origin:'*', 
