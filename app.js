@@ -8,6 +8,7 @@ require('dotenv/config');
 app.use(express.json());
 app.use('/public/uploads', express.static(__dirname + "\\public\\uploads"));
 
+console.log(process.env.DB_URL)
 // Connect MongoDB
 mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
