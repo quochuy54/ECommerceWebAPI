@@ -5,7 +5,7 @@ const route = require('./route/index');
 require('dotenv/config');
 const path = require('path')
 const cors=require("cors");
-console.log(path.join(__dirname + "/public/uploads"))
+
 //Middleware
 app.use(express.json());
 app.use('/public/uploads', express.static(path.join(__dirname + "/public/uploads")));
