@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
 const jwtHelper = require('../helper/jwt');
+const {isAuthen, isAdmin} = require('../auth/isAuth');
+
 
 // Regist User
 route.post('/register', async (req, res) => {
@@ -69,7 +71,7 @@ route.post('/login', async (req, res) => {
 });
 
 //Refresh Token when AccessToken expires
-route.post('/refreshToken', async(req, res) => {
+route.post('/refreshToken', isAuthen, async(req, res) => {
     try{
         const accessToken = req.headers.x_authorization;
         if(!accessToken){ return res.status(401).json('Token not found')};
@@ -110,7 +112,7 @@ route.post('/refreshToken', async(req, res) => {
 })
 
 // Get user
-route.get('/', async (req, res) => {
+route.get('/', isAuthen, isAdmin, async (req, res) => {
     try{
         const UserList = await User.find().select('-password');
         res.status(200).json(UserList);
@@ -121,7 +123,7 @@ route.get('/', async (req, res) => {
 });
 
 // Delete user
-route.delete('/:id', async (req, res) => {
+route.delete('/:id', isAuthen, isAdmin, async (req, res) => {
     try{
         await User.deleteOne({_id: req.params.id});
         res.status(200).json("1 user deleted");

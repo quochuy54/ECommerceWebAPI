@@ -2,6 +2,7 @@ const express = require('express');
 const route = express.Router();
 const Catelogy = require('../model/catelogy');
 const mongoose = require('mongoose');
+const {isAuthen, isAdmin} = require('../auth/isAuth');
 
 // Get All Catelogy
 route.get('/', async (req, res) => {
@@ -14,7 +15,7 @@ route.get('/', async (req, res) => {
 });
 
 // Post Catelogy
-route.post('/', async (req, res) => {
+route.post('/', isAuthen, isAdmin, async (req, res) => {
     try{
         const catelogy = new Catelogy({
             name: req.body.name,
@@ -29,7 +30,7 @@ route.post('/', async (req, res) => {
 });
 
 // Update Catelogy
-route.put('/:id', async (req, res) => {
+route.put('/:id', isAuthen, isAdmin, async (req, res) => {
     try{
         const catelogyUpdate = await Catelogy.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, {new: true});
         if(catelogyUpdate){
@@ -44,7 +45,7 @@ route.put('/:id', async (req, res) => {
 });
 
 // Delete Catelogy
-route.delete('/:id', async (req, res) => {
+route.delete('/:id', isAuthen, isAdmin, async (req, res) => {
     try{
         let catelogyId = req.params.id;
 

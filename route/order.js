@@ -3,9 +3,10 @@ const route = express.Router();
 const Order = require('../model/order');
 const OrderItem = require('../model/orderItem');
 const mongoose = require('mongoose');
+const {isAuthen, isAdmin} = require('../auth/isAuth');
 
 //Get All Order
-route.get('/',  async (req, res) => {
+route.get('/',  isAuthen, async (req, res) => {
     const sort = {};
     const query = [];
 
@@ -27,7 +28,7 @@ route.get('/',  async (req, res) => {
 })
 
 //Get An Order
-route.get('/:id',  async (req, res) => {
+route.get('/:id', isAuthen, async (req, res) => {
     try{
         const order = await Order.findById(req.params.id);
         if(!order) { return res.status(404).json('Not found order')};
@@ -38,7 +39,7 @@ route.get('/:id',  async (req, res) => {
 })
 
 //Add Order
-route.post('/',  async (req, res) => {
+route.post('/', isAuthen, async (req, res) => {
     try{
         const orderItems = Promise.all(
             req.body.orderItems.map( async orderItem => {
@@ -85,7 +86,7 @@ route.post('/',  async (req, res) => {
 });
 
 // Update Order
-route.put('/:id',  async (req, res) => {
+route.put('/:id', isAuthen, async (req, res) => {
     try{
         const orderUpdate = await Order.findByIdAndUpdate(req.params.id, {
             $set: {status: req.body.status}
@@ -97,7 +98,7 @@ route.put('/:id',  async (req, res) => {
 })
 
 // Delete Order
-route.delete('/:id',  async (req, res) => {
+route.delete('/:id', isAuthen, async (req, res) => {
     try{
         let orderId = req.params.id;
 
@@ -129,7 +130,7 @@ route.delete('/:id',  async (req, res) => {
 })
 
 // Get SumPrice all Order (Admin)
-route.get('/get/sum-sale', async (req,res) => {
+route.get('/get/sum-sale', isAuthen, isAdmin, async (req,res) => {
     try{
         const totalSaleTable = await Order.aggregate([
             {
@@ -144,7 +145,7 @@ route.get('/get/sum-sale', async (req,res) => {
 });
 
 // Get orders of an user (for user can see their orders)
-route.get('/get/user-order/:userid', async (req,res) => {
+route.get('/get/user-order/:userid', isAuthen, async (req,res) => {
     try{
         const userOrder = await Order.find({user: req.params.userid})
         .populate('user', 'name -_id')

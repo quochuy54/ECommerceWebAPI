@@ -33,7 +33,7 @@ const upload = multer({ storage: storage });
 
 
 //Get All Product and Filter by catelogy
-route.get('/', isAuthen, isAdmin, async (req, res) => {
+route.get('/', async (req, res) => {
     try{
         let filter = {};
         if(req.query.catelogy){ 
@@ -62,7 +62,7 @@ route.get('/:id', async (req, res) => {
 })
 
 // Post Product
-route.post('/', upload.single('image'), async (req, res) => {
+route.post('/', isAuthen, isAdmin, upload.single('image'), async (req, res) => {
     try{
         let catelogyId = req.body.catelogy;
 
@@ -101,7 +101,7 @@ route.post('/', upload.single('image'), async (req, res) => {
 
 
 //Update Product 
-route.put('/:id', upload.single('image'),async (req, res) => {
+route.put('/:id', isAuthen, isAdmin, upload.single('image'),async (req, res) => {
     try{
         let catelogyId = req.body.catelogy;
         if (!mongoose.Types.ObjectId.isValid(catelogyId)){
@@ -144,7 +144,7 @@ route.put('/:id', upload.single('image'),async (req, res) => {
 });
 
 //Update Gallery of Product 
-route.put('/gallery-images/:id', upload.array('images'),async (req, res) => {
+route.put('/gallery-images/:id', isAuthen, isAdmin, upload.array('images'),async (req, res) => {
     try{
         if (!mongoose.Types.ObjectId.isValid(req.params.id)){
             return res.status(400).json("ProductID is not valid");
@@ -177,7 +177,7 @@ route.put('/gallery-images/:id', upload.array('images'),async (req, res) => {
 });
 
 // Delete Product
-route.delete('/:id', async (req, res) => {
+route.delete('/:id', isAuthen, isAdmin, async (req, res) => {
     try{
         let productId = req.params.id;
 
