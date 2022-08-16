@@ -132,5 +132,15 @@ route.delete('/:id', isAuthen, isAdmin, async (req, res) => {
     }
 });
 
+//get quanlity of users
+route.get('/get/quanlity-user', isAuthen, isAdmin, async (req, res) => {
+    try{
+        const numberUser = await User.countDocuments();
+        res.status(200).json({"Number of user": numberUser});
+    }catch(e) {
+        res.status(500).json(e);
+    }
+});
+
 
 module.exports = route;
