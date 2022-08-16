@@ -129,6 +129,16 @@ route.delete('/:id', isAuthen, async (req, res) => {
     }
 })
 
+//Get quanlity of order
+route.get('/get/quanlity-order', isAuthen, isAdmin, async (req, res) => {
+    try{
+        const numberOrder = await Order.countDocuments();
+        res.status(200).json({"Number of Order": numberOrder});
+    }catch(e){
+        res.status(500).json(e);
+    }
+});
+
 // Get SumPrice all Order (Admin)
 route.get('/get/sum-sale', isAuthen, isAdmin, async (req,res) => {
     try{
