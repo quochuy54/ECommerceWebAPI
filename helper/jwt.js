@@ -14,7 +14,7 @@ const generateToken = function (userId, secretToken, tokeLife){
         },
         (err, token) => {
             if(err){
-                reject(err);
+                return reject(err);
             }
             resolve(token);
         });
@@ -27,7 +27,7 @@ const verifyToken = function (token, secretToken) {
     return new Promise((resolve, reject) => {
         jwt.verify(token, secretToken, (err, decoded) => {
             if(err){
-                reject(err);
+                return reject(err);
             }
             resolve(decoded)
         });
@@ -38,7 +38,7 @@ const verifyTokenWithoutExpire = function (token, secretToken) {
     return new Promise((resolve, reject) => {
         jwt.verify(token, secretToken, {ignoreExpiration: true}, (err, decoded) => {
             if(err){
-                reject(err);
+                return reject(err);
             }
             resolve(decoded)
         });
