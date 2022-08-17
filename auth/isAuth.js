@@ -8,12 +8,13 @@ exports.isAuthen = async function(req, res, next){
     if(!accessToken){return res.status(400).json('Access Token not found')};
     try{
         const decoded = await jwtHelper.verifyToken(accessToken, secretToken);
-        console.log(decoded)
         const user = await User.findOne({_id: decoded.userId});
        // req.user = user;
         return next();
 
     } catch(err){
+        console.log(err)
+        console.log(decoded)
         res.status(500).json(err);
         console.log(123)
     }
