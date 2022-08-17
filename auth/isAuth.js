@@ -14,7 +14,6 @@ exports.isAuthen = async function(req, res, next){
 
     } catch(err){
         console.log(err)
-        console.log(decoded)
         res.status(500).json(err);
         console.log(123)
     }
