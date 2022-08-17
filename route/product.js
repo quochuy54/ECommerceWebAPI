@@ -46,6 +46,19 @@ route.get('/', async (req, res) => {
     }
 })
 
+// Get Random Feature Product
+route.get('/random-product', async (req, res) => {
+    try{
+        const productList = await Product.aggregate([
+            { $match: {isFeatured: true} },
+            { $sample: {size : 5} }
+        ]);
+        res.status(200).json(productList);
+    }catch(e) {
+        res.status(500).json(e);
+    }
+})
+
 //Get A Product
 route.get('/:id', async (req, res) => {
     try{
