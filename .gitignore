@@ -2,4 +2,5 @@ node_modules
 XacThucJWT.txt
 build
 .env
+public
 Error.txt

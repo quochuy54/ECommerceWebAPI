@@ -32,4 +32,3 @@ const PORT = process.env.PORT || '3000';
 app.listen(PORT, () => {
     console.log(`Server is listing at ${PORT}`)
 });
-console.log(123)
