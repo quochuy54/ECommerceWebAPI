@@ -75,8 +75,8 @@ route.get('/:id', async (req, res) => {
 })
 
 // Post Product
-route.post('/', isAuthen, isAdmin, upload.single('image'), async (req, res) => {
-    try{
+route.post('/', isAuthen, isAdmin, async (req, res) => {
+    try{      
         let catelogyId = req.body.catelogy;
 
         if (!mongoose.Types.ObjectId.isValid(catelogyId)){
