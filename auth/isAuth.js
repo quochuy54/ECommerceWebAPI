@@ -9,12 +9,11 @@ exports.isAuthen = async function(req, res, next){
     try{
         const decoded = await jwtHelper.verifyToken(accessToken, secretToken);
         const user = await User.findOne({_id: decoded.userId});
-       // req.user = user;
+        req.user = user;
         return next();
-
     } catch(err){
         console.log(err)
-        res.status(500).json(err);
+        return res.status(500).json(err);
         console.log(123)
     }
     
