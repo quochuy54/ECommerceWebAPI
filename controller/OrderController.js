@@ -53,7 +53,7 @@ class OrderController{
                 return newOrderItem._id;
             }));
     
-            orderItemsResult = await orderItems;
+            const orderItemsResult = await orderItems;
     
             const totalPriceArray = await Promise.all(orderItemsResult.map( async orderItemId => {
                 let orderItem = await OrderItem.findById(orderItemId).populate('product', 'price');

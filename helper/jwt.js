@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 // Tao Token
 const generateToken = function (userId, secretToken, tokeLife){
+    // neu them callback cho jwt thi no tro thanh async
     return new Promise((resolve, reject) => {
         jwt.sign({
            userId: userId 

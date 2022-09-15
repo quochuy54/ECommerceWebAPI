@@ -61,14 +61,13 @@ class ProductController{
             if(!catelogy) {return res.status(404).json("Not found Catelogy");};
     
             if(!req.file) {return res.status(401).json('The file is required');}
-    
             // file url
-            const fileUrl = `${req.protocol}://${req.get('host')}/public/uploads/${req.file.filename}`;
+            // const fileUrl = `${req.protocol}://${req.get('host')}/public/uploads/${req.file.filename}`;
             const product = new Product({
                 name: req.body.name,
                 description: req.body.description,
                 richDescription: req.body.richDescription,
-                image: fileUrl,
+                image: req.file.location,
                 brand: req.body.brand,
                 price: req.body.price,
                 catelogy: req.body.catelogy,
