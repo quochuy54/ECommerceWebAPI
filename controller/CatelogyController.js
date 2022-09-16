@@ -17,7 +17,7 @@ class CatelogyController {
         try{
             const catelogy = new Catelogy({
                 name: req.body.name,
-                icon: req.body.icon,
+                icon: req.file.location,
                 color: req.body.color,
             });
             const catelogyAdd = await catelogy.save();
@@ -30,7 +30,20 @@ class CatelogyController {
     // Update Catelogy
     async updateCatelogy(req, res) {
         try{
-            const catelogyUpdate = await Catelogy.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, {new: true});
+            let imgPath;
+            if(fileImg){
+                imgPath = req.file.location;
+            }
+            else {
+                imgPath = product.image;
+            }
+            const catelogyUpdate = await Catelogy.findByIdAndUpdate(
+                {_id: req.params.id},
+                {$set:  {name: req.body.name,
+                        icon: req.imgPath,
+                        color: req.body.color}
+                },
+                {new: true});
             if(catelogyUpdate){
                 res.status(200).json(catelogyUpdate);
             }
