@@ -32,7 +32,9 @@ class CatelogyController {
         try{
             const catelogy = await Catelogy.findById(req.params.id);
             if(!catelogy) {return res.status(404).json('Catelogy not found')};
+            const fileImg = req.file;
             let imgPath;
+
             if(fileImg){
                 imgPath = req.file.location;
             }
@@ -42,7 +44,7 @@ class CatelogyController {
             const catelogyUpdate = await Catelogy.findByIdAndUpdate(
                 {_id: req.params.id},
                 {$set:  {name: req.body.name,
-                        icon: req.imgPath,
+                        icon: imgPath,
                         color: req.body.color}
                 },
                 {new: true});
