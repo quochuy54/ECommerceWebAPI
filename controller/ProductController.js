@@ -58,7 +58,7 @@ class ProductController{
               } else if (err) {
                 console.log("Error UnknownMulter");
               }
-        
+        console.log(123333333)
         try{      
             
             let catelogyId = req.body.catelogy;
