@@ -8,7 +8,7 @@ const upload = require('../helper/uploadMulter');
 route.get('/', catelogyController.getAllCatelogy);
 
 // Post Catelogy
-route.post('/', isAuthen, isAdmin, upload.single('icon'), ucatelogyController.addCatelogy);
+route.post('/', isAuthen, isAdmin, upload.single('icon'), catelogyController.addCatelogy);
 
 // Update Catelogy
 route.put('/:id', isAuthen, isAdmin, upload.single('icon'),catelogyController.updateCatelogy);
