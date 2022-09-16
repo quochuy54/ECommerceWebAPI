@@ -52,6 +52,7 @@ class ProductController{
 
     // Post Product
     async addProduct (req, res){
+        console.log(123333333)
         upload2(req, res, async (err) => {
             if (err instanceof multer.MulterError) {
                 console.log("Error Multer");
