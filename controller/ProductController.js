@@ -1,7 +1,8 @@
 const Catelogy = require('../model/catelogy');
 const Product  = require('../model/product');
 const mongoose = require('mongoose');
-
+const multer = require('multer')
+const upload2 = require('../helper/uploadMulter').single('image')
 class ProductController{
 
     //Get All Product
@@ -51,7 +52,15 @@ class ProductController{
 
     // Post Product
     async addProduct (req, res){
+        upload2(req, res, async (err) => {
+            if (err instanceof multer.MulterError) {
+                console.log("Error Multer");
+              } else if (err) {
+                console.log("Error UnknownMulter");
+              }
+        
         try{      
+            
             let catelogyId = req.body.catelogy;
             if (!mongoose.Types.ObjectId.isValid(catelogyId)){
                 return res.status(400).json("CatelogyID is not valid");
@@ -82,6 +91,7 @@ class ProductController{
         } catch(e) {
             res.status(500).json(e);
         }
+    })
         
     }
 
