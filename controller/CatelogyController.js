@@ -30,12 +30,14 @@ class CatelogyController {
     // Update Catelogy
     async updateCatelogy(req, res) {
         try{
+            const catelogy = await Catelogy.findById(req.params.id);
+            if(!catelogy) {return res.status(404).json('Catelogy not found')};
             let imgPath;
             if(fileImg){
                 imgPath = req.file.location;
             }
             else {
-                imgPath = product.image;
+                imgPath = catelogy.icon;
             }
             const catelogyUpdate = await Catelogy.findByIdAndUpdate(
                 {_id: req.params.id},
