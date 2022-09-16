@@ -1,8 +1,7 @@
 const Catelogy = require('../model/catelogy');
 const Product  = require('../model/product');
 const mongoose = require('mongoose');
-const multer = require('multer')
-const upload2 = require('../helper/uploadMulter').single('image')
+
 class ProductController{
 
     //Get All Product
@@ -52,16 +51,7 @@ class ProductController{
 
     // Post Product
     async addProduct (req, res){
-        console.log(123333333)
-        upload2(req, res, async (err) => {
-            if (err instanceof multer.MulterError) {
-                console.log("Error Multer");
-              } else if (err) {
-                console.log("Error UnknownMulter");
-              }
-        console.log(123333333)
         try{      
-            
             let catelogyId = req.body.catelogy;
             if (!mongoose.Types.ObjectId.isValid(catelogyId)){
                 return res.status(400).json("CatelogyID is not valid");
@@ -71,6 +61,7 @@ class ProductController{
             if(!catelogy) {return res.status(404).json("Not found Catelogy");};
     
             if(!req.file) {return res.status(401).json('The file is required');}
+    
             // file url
             // const fileUrl = `${req.protocol}://${req.get('host')}/public/uploads/${req.file.filename}`;
             const product = new Product({
@@ -92,7 +83,6 @@ class ProductController{
         } catch(e) {
             res.status(500).json(e);
         }
-    })
         
     }
 
@@ -112,7 +102,7 @@ class ProductController{
             const fileImg = req.file;
             let imgPath;
             if(fileImg){
-                imgPath = `${req.protocol}://${req.get('host')}/public/uploads/${req.file.filename}`;
+                imgPath = req.file.location;
             }
             else {
                 imgPath = product.image;

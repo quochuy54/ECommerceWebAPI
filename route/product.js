@@ -4,7 +4,6 @@ const {isAuthen, isAdmin} = require('../auth/isAuth');
 const productController = require('../controller/ProductController');
 const upload = require('../helper/uploadMulter');
 
-
 //Get All Product and Filter by catelogy
 route.get('/', productController.getAllProduct);
 
@@ -15,7 +14,7 @@ route.get('/random-product', productController.getRandomFeatureProduct)
 route.get('/:id',productController.getAproduct)
 
 // Post Product
-route.post('/', isAuthen, isAdmin, productController.addProduct);
+route.post('/', isAuthen, isAdmin, upload.single('image'), productController.addProduct);
 
 //Update Product 
 route.put('/:id', isAuthen, isAdmin, upload.single('image'), productController.updateProduct);
