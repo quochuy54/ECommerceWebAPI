@@ -42,6 +42,7 @@ const upload = multer({
       acl: 'public-read',
       metadata: function (req, file, cb) {
         cb(null, {fieldName: file.fieldname});
+        //thông tin thêm, cho trường hợp muốn lưu thông tin user post
       },
       key: function (req, file, cb) {
         const extension = FILE_EXTENSION[file.mimetype];

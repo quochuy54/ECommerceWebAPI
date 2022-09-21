@@ -144,7 +144,7 @@ class ProductController{
             let imgPaths = [];
             if(fileImgs){
                 fileImgs.map(file => {
-                    imgPaths.push(`${req.protocol}://${req.get('host')}/public/uploads/${file.filename}`);
+                    imgPaths.push(file.location);
                 })
             }
             else {
